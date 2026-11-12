@@ -1,0 +1,163 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum CartStatus {
+  OPEN
+  LOCKED
+  ORDERED
+  DELIVERED
+  COMPLETED
+}
+
+enum MemberRole {
+  LEADER
+  MEMBER
+}
+
+model User {
+  id          String       @id @default(uuid())
+  email       String       @unique
+  fullName    String
+  phoneNumber String
+  roomAddress String
+  memberships  CartMember[]
+  joinRequests JoinRequest[]
+  matchIntent  MatchIntent?
+  createdAt    DateTime      @default(now())
+}
+
+model PickupHub {
+  id        String   @id @default(uuid())
+  name      String
+  zoneCode  String   @unique
+  latitude  Float
+  longitude Float
+  carts     CoCart[]
+}
+
+model Merchant {
+  id              String    @id @default(uuid())
+  name            String
+  baseShippingFee Int
+  products        Product[]
+  carts           CoCart[]
+}
+
+model Product {
+  id         String     @id @default(uuid())
+  merchantId String
+  name       String
+  price      Int
+  imageUrl   String?
+  merchant   Merchant   @relation(fields: [merchantId], references: [id])
+  cartItems  CartItem[]
+}
+
+enum ShippingMode {
+  EQUAL
+  PROPORTIONAL
+  HYBRID
+}
+
+model CoCart {
+  id              String       @id @default(uuid())
+  joinCode        String       @unique
+  isPublic        Boolean      @default(false)
+  shippingMode    ShippingMode @default(HYBRID)
+  hubId           String
+  merchantId      String
+  status          CartStatus   @default(OPEN)
+  baseShippingFee Int
+  discountAmount  Int          @default(0)
+  expiresAt       DateTime
+
+  // Điểm nhận hàng CHUNG do Trưởng nhóm chọn (sảnh KTX, cổng trường...). Không phải vị trí của thành viên.
+  pickupLabel     String?
+  pickupLat       Float?
+  pickupLng       Float?
+  maxMembers      Int          @default(10)
+  requireApproval Boolean      @default(false)
+  rules           String?
+
+  hub             PickupHub     @relation(fields: [hubId], references: [id])
+  merchant        Merchant      @relation(fields: [merchantId], references: [id])
+  members         CartMember[]
+  joinRequests    JoinRequest[]
+  createdAt       DateTime      @default(now())
+
+  @@index([hubId, merchantId, status])
+  @@index([status, expiresAt])
+  @@index([isPublic, status, pickupLat, pickupLng])
+}
+
+/// Yêu cầu tham gia nhóm công khai cần Trưởng nhóm duyệt.
+model JoinRequest {
+  id        String   @id @default(uuid())
+  cartId    String
+  userId    String
+  createdAt DateTime @default(now())
+  cart      CoCart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, userId])
+}
+
+/// Người dùng CHỦ ĐỘNG bật chế độ "đang tìm người ghép đơn". Tọa độ đã làm tròn ~110 m.
+model MatchIntent {
+  userId     String   @id
+  lat        Float
+  lng        Float
+  merchantId String?
+  expiresAt  DateTime
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt, lat, lng])
+}
+
+model CartMember {
+  id     String     @id @default(uuid())
+  cartId String
+  userId String
+  role   MemberRole @default(MEMBER)
+
+  aliasName   String
+  avatarColor String
+  avatarSeed  String
+
+  subtotal      Int     @default(0)
+  shippingShare Int     @default(0)
+  discountShare Int     @default(0)
+  finalPayable  Int     @default(0)
+  isPaid        Boolean @default(false)
+
+  pickupTokenHash String?   @unique
+  pickedUpAt      DateTime?
+  joinedAt        DateTime  @default(now())
+
+  cart  CoCart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  user  User       @relation(fields: [userId], references: [id])
+  items CartItem[]
+
+  @@unique([cartId, userId])
+}
+
+model CartItem {
+  id          String     @id @default(uuid())
+  memberId    String
+  productId   String
+  productName String
+  unitPrice   Int
+  quantity    Int
+  note        String?
+  member      CartMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  product     Product    @relation(fields: [productId], references: [id])
+
+  @@unique([memberId, productId])
+}
