@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { io, Socket } from 'socket.io-client';
 import {
   MapPin, Clock, Users, Sparkles, KeyRound, PlusCircle, Radar, List, Map as MapIcon, Crosshair, Search,
-  ShieldCheck, Store, X, UserPlus,
+  ShieldCheck, Store, X, UserPlus, ShoppingBag, Package, Leaf,
 } from 'lucide-react';
 import { API_URL, DEMO_USERS, authedFetch, demoLogin, formatVND, getDemoUser, setDemoUser } from '../lib/api';
 import RadarMap from '../components/RadarMap';
@@ -37,7 +37,7 @@ export default function HomePage() {
   const [loc, setLoc] = useState<Loc | null>(null);
   const [radius, setRadius] = useState(1000);
   const [merchantFilter, setMerchantFilter] = useState('');
-  const [view, setView] = useState<'map' | 'list'>('map');
+  const [view, setView] = useState<'map' | 'list'>('list');
   const [addressQ, setAddressQ] = useState('');
   const [addressResults, setAddressResults] = useState<any[]>([]);
 
@@ -275,15 +275,15 @@ export default function HomePage() {
   };
 
   const input =
-    'w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500';
+    'w-full min-w-0 bg-white border border-[#E8E2D9] rounded-lg px-3 py-2.5 text-sm text-[#25312B] focus:outline-none focus:border-[#2F855A]';
   const stats = radar?.stats;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 md:p-10 font-sans">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="cocart-home min-h-screen bg-[#FFF8F0] text-[#25312B] px-4 py-6 md:px-8 md:py-8 font-sans">
+      <div className="max-w-6xl mx-auto space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex items-center gap-2 text-emerald-400 font-extrabold text-lg">
-            <Sparkles className="w-5 h-5" /> Co-Cart
+          <div className="inline-flex items-center gap-2 text-[#2F855A] font-extrabold text-2xl">
+            <ShoppingBag className="w-8 h-8" aria-hidden="true" /> Co-Cart
           </div>
           <nav
             aria-label="Tài khoản"
@@ -291,69 +291,74 @@ export default function HomePage() {
           >
             <Link
               href="/login"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-600 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-emerald-400 hover:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#D8D1C7] px-4 py-2 text-sm font-semibold text-[#25312B] transition hover:border-[#2F855A] hover:text-[#2F855A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F855A]"
             >
               Đăng nhập
             </Link>
             <Link
               href="/register"
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#F9734B] px-4 py-2 text-sm font-semibold text-[#25312B] transition hover:bg-[#F58260] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F855A] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               Đăng ký
             </Link>
           </nav>
         </div>
 
-        <div className="flex flex-wrap items-center justify-end gap-2 text-xs">
-            <span className="text-slate-500">Sandbox:</span>
-            {DEMO_USERS.map((uid, i) => (
-              <button
-                key={uid}
-                onClick={() => switchUser(uid)}
-                className={`px-3 py-1.5 rounded-lg font-bold ${userId === uid ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`}
-              >
-                Sinh viên #{i + 1}
-              </button>
-            ))}
-        </div>
-
         {/* ===== KHU VỰC CHÍNH: KHÁM PHÁ ĐƠN GHÉP QUANH BẠN ===== */}
-        <section className="rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-900 border border-emerald-500/30 p-5 md:p-8 space-y-6">
-          <div className="space-y-2">
-            <h1 className="text-2xl md:text-4xl font-extrabold text-white flex items-center gap-3">
-              <Radar className="w-8 h-8 text-emerald-400" /> Khám phá đơn ghép quanh bạn
-            </h1>
-            <p className="text-sm text-slate-300 max-w-3xl">
-              Không cần quen nhau, không cần mã mời. Tìm nhóm đặt hàng công khai gần bạn, nhận hàng tại điểm chung và chia
-              phí ship. Mọi người chỉ thấy biệt danh của nhau.
-            </p>
+        <section className="rounded-3xl bg-white border border-[#E8E2D9] p-5 md:p-8 space-y-6 shadow-sm">
+          <div className="rounded-2xl bg-[#FFF0E5] p-6 md:p-8 grid gap-6 md:grid-cols-[1fr_auto] items-center">
+            <div className="space-y-4">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#B83D20]">Cùng khu vực · Cùng chia phí giao</p>
+              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#25312B]">
+                Mua chung gần bạn,<br /><span className="text-[#B83D20]">chia nhẹ phí giao.</span>
+              </h1>
+              <p className="text-sm md:text-base leading-relaxed text-[#626860] max-w-xl">
+                Đồ uống, snack và những món cần mỗi ngày. Tìm nhóm gần bạn,
+                đặt cùng một cửa hàng và nhận tại điểm chung bằng biệt danh.
+              </p>
+              <div className="flex flex-wrap gap-3 pt-1">
+                <a href="#discover-groups" className="inline-flex min-h-11 items-center rounded-xl bg-[#F9734B] px-5 py-3 text-sm font-bold text-[#25312B] hover:bg-[#F58260]">Tìm nhóm gần bạn</a>
+                <a href="#create-group" className="inline-flex min-h-11 items-center rounded-xl border border-[#D8D1C7] bg-white px-5 py-3 text-sm font-semibold">Tạo nhóm mới</a>
+                <a href="#join-code" className="inline-flex min-h-11 items-center px-2 text-sm font-semibold text-[#B83D20] underline underline-offset-4">Tôi có mã nhóm</a>
+              </div>
+            </div>
+            <div aria-hidden="true" className="hidden md:flex h-40 w-40 flex-col items-center justify-center gap-3 rounded-full bg-[#FFDFCA] border-8 border-[#FFF8F0] text-[#B83D20]">
+              <ShoppingBag className="h-16 w-16" strokeWidth={1.5} />
+              <div className="flex gap-3"><Package className="h-6 w-6" /><Leaf className="h-6 w-6 text-[#2F855A]" /></div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-[#2F855A] font-medium">
+            <span className="inline-flex items-center gap-2"><Users className="h-4 w-4" /> Chia sẻ phí giao hàng</span>
+            <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4" /> Nhận tại điểm chung</span>
+            <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4" /> Tham gia bằng biệt danh</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {/* Vị trí + bán kính */}
-            <div className="lg:col-span-2 p-4 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
+            <div className="lg:col-span-2 p-4 rounded-2xl bg-white border border-[#E8E2D9] space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <p className="text-sm flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-emerald-400" />
+                  <MapPin className="w-4 h-4 text-[#2F855A]" />
                   {loc ? (
-                    <span className="text-white font-semibold">{loc.label}</span>
+                    <span className="text-[#25312B] font-semibold">{loc.label}</span>
                   ) : (
-                    <span className="text-slate-400">Chưa chọn khu vực</span>
+                    <span className="text-[#626860]">Chưa chọn khu vực</span>
                   )}
                 </p>
-                <button onClick={askGps} className="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex items-center gap-1.5">
+                <button onClick={askGps} className="text-xs px-3 py-1.5 rounded-lg bg-[#F3EEE8] hover:bg-[#E8E2D9] flex items-center gap-1.5">
                   <Crosshair className="w-3.5 h-3.5" /> Dùng GPS
                 </button>
               </div>
-              {geoStatus === 'asking' && !loc && <p className="text-xs text-slate-400">Đang xin quyền truy cập vị trí...</p>}
+              {geoStatus === 'asking' && !loc && <p className="text-xs text-[#626860]">Đang xin quyền truy cập vị trí...</p>}
               {(geoStatus === 'denied' || geoStatus === 'unsupported') && (
-                <p className="text-xs text-amber-300">
+                <p className="text-xs text-[#8A4B10]">
                   {geoStatus === 'denied' ? 'Bạn đã từ chối chia sẻ vị trí.' : 'Trình duyệt không hỗ trợ GPS.'} Hãy chọn khu
                   vực thủ công bên dưới.
                 </p>
               )}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <select
+                  aria-label="Điểm nhận hàng tìm kiếm"
                   className={input}
                   value={loc?.source === 'hub' ? loc.label : ''}
                   onChange={(e) => {
@@ -367,8 +372,8 @@ export default function HomePage() {
                   ))}
                 </select>
                 <form onSubmit={searchAddress} className="flex gap-2">
-                  <input value={addressQ} onChange={(e) => setAddressQ(e.target.value)} placeholder="Tìm theo địa chỉ..." className={input} />
-                  <button className="px-3 rounded-lg bg-slate-800 hover:bg-slate-700" aria-label="Tìm địa chỉ">
+                  <input aria-label="Tìm theo địa chỉ" value={addressQ} onChange={(e) => setAddressQ(e.target.value)} placeholder="Tìm theo địa chỉ..." className={input} />
+                  <button className="px-3 rounded-lg bg-[#F3EEE8] hover:bg-[#E8E2D9]" aria-label="Tìm địa chỉ">
                     <Search className="w-4 h-4" />
                   </button>
                 </form>
@@ -387,21 +392,21 @@ export default function HomePage() {
                         });
                         setAddressResults([]);
                       }}
-                      className="block w-full text-left px-2 py-1.5 rounded hover:bg-slate-800 text-slate-300"
+                      className="block w-full text-left px-2 py-1.5 rounded hover:bg-[#F3EEE8] text-[#626860]"
                     >
                       {a.display_name}
                     </button>
                   ))}
-                  <p className="text-[10px] text-slate-500">Kết quả địa chỉ từ OpenStreetMap Nominatim.</p>
+                  <p className="text-xs text-[#626860]">Kết quả địa chỉ từ OpenStreetMap Nominatim.</p>
                 </div>
               )}
               <div className="flex flex-wrap items-center gap-2 text-xs">
-                <span className="text-slate-400">Bán kính:</span>
+                <span className="text-[#626860]">Bán kính:</span>
                 {RADII.map((r) => (
                   <button
                     key={r}
                     onClick={() => setRadius(r)}
-                    className={`px-3 py-1.5 rounded-lg font-bold ${radius === r ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`}
+                    className={`px-3 py-1.5 rounded-lg font-bold ${radius === r ? 'bg-[#EAF4ED] text-[#2F855A] ring-1 ring-[#2F855A]' : 'bg-[#F3EEE8] text-[#626860]'}`}
                   >
                     {fmtRadius(r)}
                   </button>
@@ -409,7 +414,7 @@ export default function HomePage() {
                 <select
                   value={merchantFilter}
                   onChange={(e) => setMerchantFilter(e.target.value)}
-                  className="ml-auto bg-slate-950 border border-slate-800 rounded-lg px-2 py-1.5"
+                  aria-label="Lọc theo cửa hàng" className="max-w-full ml-auto bg-white border border-[#E8E2D9] rounded-lg px-2 py-1.5"
                 >
                   <option value="">Ưu tiên: mọi cửa hàng</option>
                   {catalog.merchants.map((m) => (
@@ -420,41 +425,41 @@ export default function HomePage() {
             </div>
 
             {/* Thống kê */}
-            <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
-              <p className="text-sm text-slate-300">
-                Trong khu vực của bạn hiện có <strong className="text-2xl text-emerald-400">{stats?.uniquePeople ?? 0}</strong>{' '}
+            <div className="p-4 rounded-2xl bg-white border border-[#E8E2D9] space-y-3">
+              <p className="text-sm text-[#626860]">
+                Trong khu vực của bạn hiện có <strong className="text-2xl text-[#2F855A]">{stats?.uniquePeople ?? 0}</strong>{' '}
                 người đang muốn ghép đơn.
               </p>
               <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                <div className="p-2 rounded-lg bg-slate-900">
-                  <p className="text-lg font-bold text-white">{stats?.joinedPeople ?? 0}</p>đã vào nhóm
+                <div className="p-2 rounded-lg bg-white">
+                  <p className="text-lg font-bold text-[#25312B]">{stats?.joinedPeople ?? 0}</p>đã vào nhóm
                 </div>
-                <div className="p-2 rounded-lg bg-slate-900">
-                  <p className="text-lg font-bold text-white">{stats?.seekingPeople ?? 0}</p>đang tìm nhóm
+                <div className="p-2 rounded-lg bg-white">
+                  <p className="text-lg font-bold text-[#25312B]">{stats?.seekingPeople ?? 0}</p>đang tìm nhóm
                 </div>
-                <div className="p-2 rounded-lg bg-slate-900">
-                  <p className="text-lg font-bold text-white">{stats?.openGroups ?? 0}</p>nhóm đang mở
+                <div className="p-2 rounded-lg bg-white">
+                  <p className="text-lg font-bold text-[#25312B]">{stats?.openGroups ?? 0}</p>nhóm đang mở
                 </div>
               </div>
-              <p className="text-[10px] text-slate-500">
+              <p className="text-xs text-[#626860]">
                 Chỉ đếm người đã tham gia nhóm công khai hoặc tự bật chế độ tìm ghép đơn. Mỗi người chỉ tính một lần.
               </p>
               <button
                 onClick={toggleIntent}
                 disabled={!loc || !token}
-                className={`w-full py-2 rounded-lg text-xs font-bold disabled:opacity-40 ${radar?.myIntent?.active ? 'bg-amber-500 text-slate-950' : 'bg-slate-800 text-emerald-300 hover:bg-slate-700'}`}
+                className={`w-full py-2 rounded-lg text-xs font-bold disabled:opacity-40 ${radar?.myIntent?.active ? 'bg-amber-500 text-[#25312B]' : 'bg-[#F3EEE8] text-[#2F855A] hover:bg-[#E8E2D9]'}`}
               >
                 {radar?.myIntent?.active
                   ? 'Bạn đang được tính là người tìm ghép đơn · Tắt'
                   : 'Tôi cũng muốn ghép đơn ở đây (bật 30 phút)'}
               </button>
               {radar?.topMerchants?.length > 0 && (
-                <div className="text-xs space-y-1 pt-2 border-t border-slate-800">
-                  <p className="text-slate-400 flex items-center gap-1">
+                <div className="text-xs space-y-1 pt-2 border-t border-[#E8E2D9]">
+                  <p className="text-[#626860] flex items-center gap-1">
                     <Store className="w-3.5 h-3.5" /> Cửa hàng nhiều người đặt:
                   </p>
                   {radar.topMerchants.map((m: any) => (
-                    <p key={m.merchantId} className="text-slate-200">
+                    <p key={m.merchantId} className="text-[#25312B]">
                       {m.merchantName} — {m.people} người · {m.groups} nhóm
                     </p>
                   ))}
@@ -464,39 +469,39 @@ export default function HomePage() {
           </div>
 
           {/* Bản đồ / danh sách */}
-          <div className="flex items-center justify-between">
-            <h2 className="font-bold text-white">
-              Nhóm đặt hàng đang mở {loading && <span className="text-xs text-slate-400">· đang quét...</span>}
+          <div id="discover-groups" className="scroll-mt-6 flex flex-wrap gap-3 items-center justify-between">
+            <h2 className="font-bold text-[#25312B]">
+              Nhóm đặt hàng đang mở {loading && <span className="text-xs text-[#626860]">· đang tìm nhóm...</span>}
             </h2>
             <div className="flex gap-1 text-xs">
-              <button onClick={() => setView('map')} className={`px-3 py-1.5 rounded-lg flex items-center gap-1 ${view === 'map' ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800'}`}>
+              <button onClick={() => setView('map')} className={`px-3 py-1.5 rounded-lg flex items-center gap-1 ${view === 'map' ? 'bg-[#F9734B] text-[#25312B]' : 'bg-[#F3EEE8]'}`}>
                 <MapIcon className="w-3.5 h-3.5" /> Bản đồ
               </button>
-              <button onClick={() => setView('list')} className={`px-3 py-1.5 rounded-lg flex items-center gap-1 ${view === 'list' ? 'bg-emerald-500 text-slate-950' : 'bg-slate-800'}`}>
+              <button onClick={() => setView('list')} className={`px-3 py-1.5 rounded-lg flex items-center gap-1 ${view === 'list' ? 'bg-[#F9734B] text-[#25312B]' : 'bg-[#F3EEE8]'}`}>
                 <List className="w-3.5 h-3.5" /> Danh sách
               </button>
             </div>
           </div>
 
-          {error && <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-300">{error}</div>}
+          {error && <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-700">{error}</div>}
 
           {!loc ? (
-            <div className="p-8 rounded-2xl bg-slate-950/60 border border-slate-800 text-center text-sm text-slate-400">
-              Cho phép GPS hoặc chọn khu vực để bắt đầu quét.
+            <div className="p-8 rounded-2xl bg-white border border-[#E8E2D9] text-center text-sm text-[#626860]">
+              Chọn điểm nhận hàng ở phía trên để tìm nhóm gần bạn.
             </div>
           ) : (
             <div className={`grid grid-cols-1 ${view === 'map' ? 'lg:grid-cols-2' : ''} gap-4`}>
               {view === 'map' && radar && (
-                <div className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800">
+                <div className="p-4 rounded-2xl bg-white border border-[#E8E2D9]">
                   <RadarMap center={radar.center} radius={radius} groups={groups} selected={selected} onSelect={setSelected} />
-                  <p className="text-[10px] text-slate-500 text-center mt-2">
-                    Vị trí điểm nhận làm tròn ~110 m, khoảng cách làm tròn 50 m. Chấm vàng: nhóm của bạn.
+                  <p className="text-xs text-[#626860] text-center mt-2">
+                    Vị trí điểm nhận làm tròn ~110 m, khoảng cách làm tròn 50 m. Chấm xanh lá: nhóm của bạn. Cam: nhóm còn chỗ. Xám: nhóm hết chỗ.
                   </p>
                 </div>
               )}
               <div className="space-y-3 max-h-[560px] overflow-y-auto pr-1">
                 {groups.length === 0 ? (
-                  <div className="p-6 rounded-2xl bg-slate-950/60 border border-slate-800 text-sm text-slate-400 space-y-2">
+                  <div className="p-6 rounded-2xl bg-white border border-[#E8E2D9] text-sm text-[#626860] space-y-2">
                     <p>Chưa có nhóm công khai nào trong bán kính {fmtRadius(radius)}.</p>
                     <p>Hãy tăng bán kính, bật &quot;Tôi cũng muốn ghép đơn&quot; hoặc tự tạo nhóm công khai bên dưới.</p>
                   </div>
@@ -505,42 +510,42 @@ export default function HomePage() {
                     <div
                       key={g.cartId}
                       onMouseEnter={() => setSelected(g.cartId)}
-                      className={`p-4 rounded-2xl bg-slate-950 border space-y-2 ${selected === g.cartId ? 'border-emerald-500' : 'border-slate-800'}`}
+                      className={`p-4 rounded-2xl bg-white border space-y-3 shadow-sm ${selected === g.cartId ? 'border-[#2F855A]' : 'border-[#E8E2D9]'}`}
                     >
                       <div className="flex justify-between items-start gap-2">
                         <div>
-                          <p className="text-[10px] text-slate-500">
+                          <p className="text-xs text-[#626860]">
                             Nhóm {i + 1}
                             {g.isMine ? ' · bạn đang ở nhóm này' : ''}
                           </p>
-                          <p className="font-bold text-white">{g.merchantName}</p>
-                          <p className="text-xs text-slate-400 flex items-center gap-1">
+                          <p className="font-bold text-[#25312B]">{g.merchantName}</p>
+                          <p className="text-xs text-[#626860] flex items-center gap-1">
                             <MapPin className="w-3 h-3" /> {g.pickupLabel} · ~{g.distanceMeters} m
                           </p>
                         </div>
-                        <span className="inline-flex items-center gap-1 text-xs text-amber-400 font-semibold whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 text-xs text-[#8A4B10] font-semibold whitespace-nowrap">
                           <Clock className="w-3.5 h-3.5" /> Còn {Math.ceil(remaining(g) / 60)} phút
                         </span>
                       </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-slate-300">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-[#626860]">
                         <span>
-                          <Users className="inline w-3.5 h-3.5 text-blue-400" /> {g.membersCount} người đang đặt
+                          <Users className="inline w-3.5 h-3.5 text-[#2F855A]" /> {g.membersCount} người đang đặt
                         </span>
-                        <span>Còn {g.seatsLeft}/{g.maxMembers} chỗ</span>
+                        <span className="rounded-full bg-[#EAF4ED] px-2 py-1 text-[#2F855A] font-semibold">Còn {g.seatsLeft}/{g.maxMembers} chỗ</span>
                         <span>
-                          Ship dự kiến: <b className="text-emerald-400">{formatVND(g.estimatedShipPerPerson)}</b>/người
+                          Ship dự kiến: <b className="text-[#2F855A]">{formatVND(g.estimatedShipPerPerson)}</b>/người
                         </span>
                         <span>
-                          Tiết kiệm ~<b className="text-emerald-400">{formatVND(g.estimatedSaving)}</b>
+                          Tiết kiệm ~<b className="text-[#2F855A]">{formatVND(g.estimatedSaving)}</b>
                         </span>
                       </div>
-                      <div className="flex items-center justify-between pt-2 border-t border-slate-900">
-                        <span className="text-[11px] text-emerald-300">
+                      <div className="flex flex-wrap gap-3 items-center justify-between pt-3 border-t border-[#E8E2D9]">
+                        <span className="text-xs text-[#2F855A]">
                           Đang tìm người ghép đơn{g.requireApproval ? ' · cần Trưởng nhóm duyệt' : ''}
                         </span>
                         <button
                           onClick={() => openPreview(g.cartId)}
-                          className="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs"
+                          className="px-4 py-2 rounded-lg bg-[#F9734B] hover:bg-[#F58260] text-[#25312B] font-bold text-xs"
                         >
                           Xem nhóm và tham gia
                         </button>
@@ -554,12 +559,12 @@ export default function HomePage() {
         </section>
 
         {/* ===== TẠO NHÓM ===== */}
-        <form onSubmit={create} className="p-5 md:p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
-          <h2 className="font-bold text-white flex items-center gap-2">
-            <PlusCircle className="w-5 h-5 text-emerald-400" /> Tạo nhóm đặt hàng mới (bạn là Trưởng nhóm)
+        <form id="create-group" onSubmit={create} className="p-5 md:p-6 rounded-2xl bg-white border border-[#E8E2D9] space-y-3">
+          <h2 className="font-bold text-[#25312B] flex items-center gap-2">
+            <PlusCircle className="w-5 h-5 text-[#2F855A]" /> Rủ thêm người, chia nhẹ phí giao
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <label className="text-xs text-slate-400 space-y-1">
+            <label className="text-xs text-[#626860] space-y-1">
               Cửa hàng
               <select value={form.merchantId} onChange={(e) => setF({ merchantId: e.target.value })} className={input}>
                 {catalog.merchants.map((m) => (
@@ -567,7 +572,7 @@ export default function HomePage() {
                 ))}
               </select>
             </label>
-            <label className="text-xs text-slate-400 space-y-1">
+            <label className="text-xs text-[#626860] space-y-1">
               Khu vực / điểm nhận chuẩn
               <select value={form.hubId} onChange={(e) => setF({ hubId: e.target.value })} className={input}>
                 {catalog.hubs.map((h) => (
@@ -575,19 +580,19 @@ export default function HomePage() {
                 ))}
               </select>
             </label>
-            <label className="text-xs text-slate-400 space-y-1">
+            <label className="text-xs text-[#626860] space-y-1">
               Tên điểm nhận chung (tùy chọn)
               <input value={form.pickupLabel} maxLength={80} onChange={(e) => setF({ pickupLabel: e.target.value })} placeholder="VD: Sảnh KTX khu A" className={input} />
             </label>
-            <label className="text-xs text-slate-400 space-y-1">
+            <label className="text-xs text-[#626860] space-y-1">
               Số thành viên tối đa
               <input type="number" min={2} max={10} value={form.maxMembers} onChange={(e) => setF({ maxMembers: Number(e.target.value) })} className={input} />
             </label>
-            <label className="text-xs text-slate-400 space-y-1">
+            <label className="text-xs text-[#626860] space-y-1">
               Thời gian chờ ghép (phút)
               <input type="number" min={10} max={120} value={form.windowMinutes} onChange={(e) => setF({ windowMinutes: Number(e.target.value) })} className={input} />
             </label>
-            <label className="text-xs text-slate-400 space-y-1">
+            <label className="text-xs text-[#626860] space-y-1">
               Cách chia phí ship
               <select value={form.mode} onChange={(e) => setF({ mode: e.target.value })} className={input}>
                 {MODES.map((m) => (
@@ -596,11 +601,11 @@ export default function HomePage() {
               </select>
             </label>
           </div>
-          <label className="text-xs text-slate-400 block space-y-1">
+          <label className="text-xs text-[#626860] block space-y-1">
             Quy định nhóm (tùy chọn)
             <input value={form.rules} maxLength={300} onChange={(e) => setF({ rules: e.target.value })} placeholder="VD: Có mặt nhận hàng trong 10 phút sau khi shipper tới" className={input} />
           </label>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-300">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-[#626860]">
             <label className="flex items-center gap-2">
               <input type="checkbox" checked={form.isPublic} onChange={(e) => setF({ isPublic: e.target.checked })} />
               Công khai: cho phép người lạ trong khu vực tìm thấy và tham gia (tắt = riêng tư, chỉ vào bằng mã)
@@ -616,80 +621,96 @@ export default function HomePage() {
               Đặt điểm nhận tại vị trí GPS hiện tại (chỉ khi bạn đang ở nơi công cộng)
             </label>
           </div>
-          <p className="text-[11px] text-amber-300/80">
+          <p className="text-xs text-[#8A4B10]">
             Chỉ chọn nơi công cộng (sảnh, cổng trường...). Không ghi số phòng hay địa chỉ nhà riêng.
           </p>
           <button
             disabled={!form.hubId || !form.merchantId}
-            className="w-full md:w-auto px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 text-slate-950 font-bold text-sm"
+            className="w-full md:w-auto px-6 py-2.5 rounded-xl bg-[#F9734B] hover:bg-[#F58260] disabled:opacity-40 text-[#25312B] font-bold text-sm"
           >
             Tạo nhóm
           </button>
         </form>
 
         {/* ===== PHỤ: MÃ MỜI ===== */}
-        <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-slate-300 flex items-center gap-2">
-            <KeyRound className="w-4 h-4 text-blue-400" /> Bạn có mã mời từ bạn bè?
+        <div id="join-code" className="p-5 rounded-2xl bg-[#FFF0E5] border border-[#E8E2D9] flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-[#626860] flex items-center gap-2">
+            <KeyRound className="w-4 h-4 text-[#2F855A]" /> Bạn có mã mời từ bạn bè?
           </p>
           {showCode ? (
             <form onSubmit={joinByCode} className="flex gap-2">
-              <input value={code} onChange={(e) => setCode(e.target.value)} placeholder="VD: K7P3QA" maxLength={16} autoFocus className={`${input} uppercase tracking-widest w-40`} />
-              <button className="px-4 rounded-lg bg-blue-500 hover:bg-blue-400 text-slate-950 font-bold text-sm">Vào</button>
+              <input aria-label="Mã tham gia nhóm" value={code} onChange={(e) => setCode(e.target.value)} placeholder="VD: K7P3QA" maxLength={16} autoFocus className={`${input} uppercase tracking-widest w-40`} />
+              <button className="px-4 rounded-lg bg-[#F9734B] hover:bg-[#F58260] text-[#25312B] font-bold text-sm">Vào</button>
             </form>
           ) : (
-            <button onClick={() => setShowCode(true)} className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-bold">
+            <button onClick={() => setShowCode(true)} className="px-4 py-2 rounded-lg bg-[#F3EEE8] hover:bg-[#E8E2D9] text-sm font-bold">
               Nhập mã tham gia
             </button>
           )}
         </div>
+        <details className="rounded-2xl border border-[#E8E2D9] bg-white p-4">
+          <summary className="cursor-pointer text-sm font-semibold text-[#626860]">Thử nghiệm với tài khoản mẫu</summary>
+        <div className="flex flex-wrap items-center justify-end gap-2 text-xs">
+            <span className="text-[#626860]">Chế độ demo:</span>
+            {DEMO_USERS.map((uid, i) => (
+              <button
+                key={uid}
+                onClick={() => switchUser(uid)}
+                className={`px-3 py-1.5 rounded-lg font-bold ${userId === uid ? 'bg-[#EAF4ED] text-[#2F855A] ring-1 ring-[#2F855A]' : 'bg-[#F3EEE8] text-[#626860]'}`}
+              >
+                Sinh viên #{i + 1}
+              </button>
+            ))}
+        </div>
+
+        </details>
       </div>
 
       {/* ===== MODAL ĐỒNG Ý GHÉP ĐƠN VỚI NGƯỜI LẠ ===== */}
       {preview && (
         <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" role="dialog" aria-modal="true">
-          <div className="w-full max-w-md rounded-2xl bg-slate-900 border border-emerald-500/40 p-6 space-y-4">
+          <div className="w-full max-w-md max-h-[90dvh] overflow-y-auto rounded-2xl bg-white border border-[#CDE2D3] p-6 space-y-4">
             <div className="flex items-start justify-between gap-2">
-              <h3 className="font-bold text-white flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" /> Bạn đang tham gia đặt hàng chung với những người
+              <h3 className="font-bold text-[#25312B] flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-[#2F855A] shrink-0" /> Bạn đang tham gia đặt hàng chung với những người
                 chưa quen biết.
               </h3>
               <button onClick={() => setPreview(null)} aria-label="Đóng">
-                <X className="w-5 h-5 text-slate-400" />
+                <X className="w-5 h-5 text-[#626860]" />
               </button>
             </div>
-            <ul className="text-sm text-slate-300 space-y-1.5">
-              <li>Cửa hàng: <b className="text-white">{preview.merchantName}</b></li>
-              <li>Điểm nhận hàng: <b className="text-white">{preview.pickupLabel}</b></li>
-              <li>Thành viên hiện có: <b className="text-white">{preview.membersCount}/{preview.maxMembers}</b></li>
+            <ul className="text-sm text-[#626860] space-y-1.5">
+              <li>Cửa hàng: <b className="text-[#25312B]">{preview.merchantName}</b></li>
+              <li>Điểm nhận hàng: <b className="text-[#25312B]">{preview.pickupLabel}</b></li>
+              <li>Thành viên hiện có: <b className="text-[#25312B]">{preview.membersCount}/{preview.maxMembers}</b></li>
               <li>
-                Chia phí ship: <b className="text-white">{MODE_LABEL[preview.shippingMode] || preview.shippingMode}</b> (ship gốc{' '}
+                Chia phí ship: <b className="text-[#25312B]">{MODE_LABEL[preview.shippingMode] || preview.shippingMode}</b> (ship gốc{' '}
                 {formatVND(preview.baseShippingFee)}, dự kiến ~{formatVND(preview.estimatedShipPerPerson)}/người)
               </li>
               <li>
                 Dự kiến chốt đơn:{' '}
-                <b className="text-white">
+                <b className="text-[#25312B]">
                   {new Date(preview.expiresAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}
                 </b>
               </li>
-              <li>Quy định nhóm: <span className="text-white">{preview.rules || 'Không có quy định riêng.'}</span></li>
-              <li className="text-xs text-slate-400">
+              <li>Quy định nhóm: <span className="text-[#25312B]">{preview.rules || 'Không có quy định riêng.'}</span></li>
+              <li className="text-xs text-[#626860]">
                 Bạn chỉ hiện bằng biệt danh. Có thể rời nhóm trước khi chốt đơn và trước khi thanh toán.
                 {preview.requireApproval && ' Nhóm này cần Trưởng nhóm duyệt.'}
               </li>
             </ul>
             {!preview.alreadyMember && !preview.joinable && (
-              <p className="text-xs text-red-300">Nhóm đã đầy, đã chốt hoặc hết hạn.</p>
+              <p className="text-xs text-red-700">Nhóm đã đầy, đã chốt hoặc hết hạn.</p>
             )}
-            {joinStatus && <p className="text-xs text-amber-300">{joinStatus}</p>}
+            {joinStatus && <p className="text-xs text-[#8A4B10]">{joinStatus}</p>}
             <div className="flex gap-2">
-              <button onClick={() => setPreview(null)} className="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 font-bold text-sm">
+              <button onClick={() => setPreview(null)} className="flex-1 py-2.5 rounded-xl bg-[#F3EEE8] hover:bg-[#E8E2D9] font-bold text-sm">
                 Hủy
               </button>
               <button
                 onClick={confirmJoin}
                 disabled={!preview.alreadyMember && !preview.joinable}
-                className="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40 text-slate-950 font-bold text-sm flex items-center justify-center gap-1.5"
+                className="flex-1 py-2.5 rounded-xl bg-[#F9734B] hover:bg-[#F58260] disabled:opacity-40 text-[#25312B] font-bold text-sm flex items-center justify-center gap-1.5"
               >
                 <UserPlus className="w-4 h-4" /> {preview.alreadyMember ? 'Vào nhóm' : 'Đồng ý và tham gia'}
               </button>

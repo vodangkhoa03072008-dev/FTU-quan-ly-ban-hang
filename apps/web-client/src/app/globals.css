@@ -2,7 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Màu mặc định; các trang có nền riêng vẫn giữ màu của trang đó. */
 body {
-  background: #020617;
-  color: #e2e8f0;
+  background: #FFF8F0;
+  color: #25312B;
 }
+
+/* Chỉ áp dụng cho trang chủ để không đổi form ở các trang khác. */
+.cocart-home :is(button, a, input, select, summary):focus-visible {
+  outline: 3px solid #2F855A;
+  outline-offset: 3px;
+}
+.cocart-home button { min-height: 44px; }
+.cocart-home button:disabled { cursor: not-allowed; }
+.cocart-home input::placeholder { color: #626860; opacity: 1; }
+.cocart-home input[type="checkbox"] { accent-color: #2F855A; }
+.cocart-home select { max-width: 100%; }
+.cocart-home #create-group,
+.cocart-home #join-code { scroll-margin-top: 24px; }
