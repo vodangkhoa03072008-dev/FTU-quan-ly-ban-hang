@@ -144,8 +144,13 @@ export default function LoginPage() {
             </form>
 
             <p className="mt-6 border-t border-slate-800 pt-6 text-sm leading-relaxed text-slate-400">
-              Chưa có tài khoản? Trang đăng ký sẽ được bổ sung ở bước tiếp
-              theo.
+              Chưa có tài khoản?{' '}
+              <Link
+                href="/register"
+                className="rounded font-semibold text-emerald-400 underline underline-offset-4 hover:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+              >
+                Đăng ký
+              </Link>
             </p>
           </section>
         </div>
