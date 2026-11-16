@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { io, Socket } from 'socket.io-client';
 import {
   MapPin, Clock, Users, Sparkles, KeyRound, PlusCircle, Radar, List, Map as MapIcon, Crosshair, Search,
@@ -284,7 +285,26 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 text-emerald-400 font-extrabold text-lg">
             <Sparkles className="w-5 h-5" /> Co-Cart
           </div>
-          <div className="flex items-center gap-2 text-xs">
+          <nav
+            aria-label="Tài khoản"
+            className="flex flex-wrap items-center gap-3"
+          >
+            <Link
+              href="/login"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-600 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-emerald-400 hover:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            >
+              Đăng nhập
+            </Link>
+            <Link
+              href="/register"
+              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Đăng ký
+            </Link>
+          </nav>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-end gap-2 text-xs">
             <span className="text-slate-500">Sandbox:</span>
             {DEMO_USERS.map((uid, i) => (
               <button
@@ -295,7 +315,6 @@ export default function HomePage() {
                 Sinh viên #{i + 1}
               </button>
             ))}
-          </div>
         </div>
 
         {/* ===== KHU VỰC CHÍNH: KHÁM PHÁ ĐƠN GHÉP QUANH BẠN ===== */}
