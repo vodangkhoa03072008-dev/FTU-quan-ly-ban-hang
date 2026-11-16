@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { ArrowLeft, ShoppingBag } from 'lucide-react';
 
 const inputClass =
-  'w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none placeholder:text-slate-500 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20';
+  'w-full rounded-xl border border-[#D8D1C7] bg-[#FFF8F0] px-4 py-3 text-[#25312B] outline-none placeholder:text-[#626860] focus:border-[#2F855A] focus:ring-2 focus:ring-[#2F855A]/20';
 
 const labelClass =
-  'mb-2 block text-sm font-medium text-slate-200';
+  'mb-2 block text-sm font-medium text-[#25312B]';
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,11 +56,11 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 px-4 py-8 text-slate-100 sm:px-8">
+    <main className="min-h-screen [&_button]:min-h-11 [&_button:disabled]:cursor-not-allowed [&_:focus-visible]:outline [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-[#2F855A] bg-[#FFF8F0] px-4 py-8 text-[#25312B] sm:px-8">
       <div className="mx-auto max-w-xl">
         <Link
           href="/login"
-          className="inline-flex items-center gap-2 rounded-lg text-sm text-slate-300 hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          className="inline-flex items-center gap-2 rounded-lg text-sm text-[#626860] hover:text-[#2F855A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F855A]"
         >
           <ArrowLeft size={18} aria-hidden="true" />
           Về trang đăng nhập
@@ -68,9 +68,9 @@ export default function RegisterPage() {
 
         <section
           aria-labelledby="register-heading"
-          className="mt-8 rounded-3xl border border-slate-800 bg-slate-900 p-6 sm:p-10"
+          className="mt-8 shadow-sm rounded-3xl border border-[#E8E2D9] bg-white p-6 sm:p-10"
         >
-          <div className="flex items-center gap-3 text-emerald-400">
+          <div className="flex items-center gap-3 text-[#2F855A]">
             <ShoppingBag size={28} aria-hidden="true" />
             <span className="text-2xl font-bold">Co-Cart</span>
           </div>
@@ -79,14 +79,14 @@ export default function RegisterPage() {
             Tạo tài khoản
           </h1>
 
-          <p className="mt-3 leading-relaxed text-slate-300">
+          <p className="mt-3 leading-relaxed text-[#626860]">
             Bắt đầu mua chung và chia sẻ phí giao hàng cùng những người
             trong khu vực.
           </p>
 
           <p
             id="register-description"
-            className="mt-3 text-sm text-slate-400"
+            className="mt-3 text-sm text-[#626860]"
           >
             Bản xem trước giao diện — chưa kết nối đăng ký.
           </p>
@@ -112,7 +112,7 @@ export default function RegisterPage() {
                 aria-describedby="nickname-help"
                 className={inputClass}
               />
-              <p id="nickname-help" className="mt-2 text-sm text-slate-400">
+              <p id="nickname-help" className="mt-2 text-sm text-[#626860]">
                 Từ 2 đến 30 ký tự. Không dùng số điện thoại hoặc địa chỉ riêng.
               </p>
             </div>
@@ -147,7 +147,7 @@ export default function RegisterPage() {
                 aria-describedby="password-help"
                 className={inputClass}
               />
-              <p id="password-help" className="mt-2 text-sm text-slate-400">
+              <p id="password-help" className="mt-2 text-sm text-[#626860]">
                 Khi thử giao diện, hãy dùng mật khẩu mẫu.
               </p>
             </div>
@@ -168,13 +168,13 @@ export default function RegisterPage() {
               />
             </div>
 
-            <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-slate-300">
+            <label className="flex min-h-11 cursor-pointer items-center gap-3 text-sm text-[#626860]">
               <input
                 type="checkbox"
                 checked={showPassword}
                 onChange={(event) => setShowPassword(event.target.checked)}
                 aria-controls="password confirmPassword"
-                className="h-4 w-4 accent-emerald-400"
+                className="h-4 w-4 accent-[#2F855A]"
               />
               Hiển thị mật khẩu
             </label>
@@ -182,7 +182,7 @@ export default function RegisterPage() {
             {error && (
               <p
                 role="alert"
-                className="rounded-xl border border-red-900 bg-red-950/40 p-4 text-sm leading-relaxed text-red-200"
+                className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm leading-relaxed text-red-700"
               >
                 {error}
               </p>
@@ -190,21 +190,21 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              className="w-full rounded-xl bg-emerald-400 px-4 py-3 font-semibold text-slate-950 transition hover:bg-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="w-full rounded-xl bg-[#F9734B] px-4 py-3 font-semibold text-[#25312B] transition hover:bg-[#F58260] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F855A] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               Tạo tài khoản
             </button>
 
-            <p role="status" className="text-sm leading-relaxed text-emerald-300">
+            <p role="status" className="text-sm leading-relaxed text-[#2F855A]">
               {message}
             </p>
           </form>
 
-          <p className="mt-6 border-t border-slate-800 pt-6 text-center text-sm text-slate-400">
+          <p className="mt-6 border-t border-[#E8E2D9] pt-6 text-center text-sm text-[#626860]">
             Đã có tài khoản?{' '}
             <Link
               href="/login"
-              className="rounded font-semibold text-emerald-400 underline underline-offset-4 hover:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+              className="rounded font-semibold text-[#2F855A] underline underline-offset-4 hover:text-[#2F855A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2F855A]"
             >
               Đăng nhập
             </Link>
